@@ -1,0 +1,21 @@
+
+header {
+    height: 60px;
+}
+
+.main {
+    height: calc(100vh - 100px);
+}
+
+footer {
+    height: 25px;
+    background-color: #000;
+    color: #FFF;
+    margin: 0px;
+    padding: 5px;
+}
+
+.welcome {
+    font-size: 22px;
+    font-weight: 700;
+}

@@ -1,0 +1,13 @@
+.receita {
+    background: #FFF;
+    padding: 10px;
+}
+
+.receita h3 {
+    text-align: center;
+    width: 100%;
+}
+
+.ingredientes {
+    margin: 10px;
+}
