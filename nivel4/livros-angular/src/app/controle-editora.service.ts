@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Editora } from './editora';
 
 @Injectable({
@@ -11,12 +12,12 @@ export class ControleEditoraService {
     new Editora(3, 'Editora Antiga')
   ]
 
-  getEditoras(): Array<Editora> {
-    return this.editoras;
+  getEditoras(): Observable<Array<Editora>> {
+    return of(this.editoras);
   }
 
-  getNomeEditora(codEditora: number): string {
+  getNomeEditora(codEditora: number): Observable<string> {
     const editora = this.editoras.filter(e => e.codEditora === codEditora)[0];
-    return editora ? editora.nome : '';
+    return of(editora ? editora.nome : '');
   }
 }
