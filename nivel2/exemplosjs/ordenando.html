@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenando</title>
+
+    <!-- Importação dos arquivos CSS do Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+    <!-- Importação do arquivo JavaScript do Bootstrap -->
+    <script
+    src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="ordenando.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Entrada de dados</h1>
+        <hr />
+        <div class="form-group row">
+            <label for="nome" class="col-sm-2 col-form-label">Valor</label>
+            <div class="col-sm-2">
+              <input type="number" class="form-control" id="valor" placeholder="Valor">
+            </div>
+            <button id="adicionar" onclick="add()" class="btn btn-success">Adicionar</button>
+        </div>
+        <div class="form-group row">
+            <label for="nome" class="col-sm-2 col-form-label">Tipo de ordenamento</label>
+            <div class="col-sm-2">
+              <select class="form-control" id="ordenamento">
+                <option value="bubble_sort" selected>Bubble Sort</option>
+                <option value="selection_sort">Selection Sort</option>
+                <option value="quick_sort">Quick Sort</option>
+              </select> 
+            </div>
+            <button id="ordenar" onclick="ordenar()" class="btn btn-success">Ordenar</button>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-warning btn-lg" onclick="misturar()">Misturar</button>
+            </div>
+        </div>
+        <hr />
+        <h2>Resultados</h2>
+        <ul id="valores">
+
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var $valor = document.getElementById('valor');
+        var $valores = document.getElementById('valores');
+        var $ordenamento = document.getElementById('ordenamento');
+
+        function add() {
+            const node = document.createElement('li');
+            const texto_node = document.createTextNode($valor.value);
+            node.appendChild(texto_node);
+            $valores.appendChild(node);
+        }
+
+        function converter_valores_em_numeros() {
+            return Array.from($valores.children).map(li => Number(li.textContent));
+        }
+
+        function ordenar() {
+            const algoritmo = $ordenamento.value;
+            const valores = converter_valores_em_numeros();
+            let valores_ordenados = [];
+
+            if (algoritmo === 'bubble_sort') {
+                valores_ordenados = bubble_sort(valores);
+            } else if (algoritmo === 'selection_sort') {
+                valores_ordenados = selection_sort(valores);
+            } else if (algoritmo === 'quick_sort') {
+                valores_ordenados = quick_sort(valores);
+            } else {
+                alert('algoritmo de ordenamento invalido!');
+                return;
+            }
+            repopular_lista_valores(valores_ordenados);
+        }
+
+        function misturar() {
+            const qtd_trocas = 1;
+            const valores = converter_valores_em_numeros()
+            repopular_lista_valores(shuffle(valores, qtd_trocas));
+        }
+
+        function repopular_lista_valores(vetor) {
+            const itens = vetor.map(item => {
+              const li = document.createElement('li');
+              li.innerText = item;
+              return li;
+            });
+          
+            const conteudo_lista = itens.reduce((conteudo_lista, item) => {
+              return conteudo_lista + item.outerHTML;
+            }, '');
+          
+            $valores.innerHTML = conteudo_lista;
+        }
+
+    </script>
+</body>
+</html>
